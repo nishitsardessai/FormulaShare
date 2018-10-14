@@ -53,9 +53,9 @@ For standard objects sharing reasons aren't supported by Salesforce. As an alter
 From the Setup menu, type "Custom Metadata Types" and click "Manage Records" for FormulaShare Rule. Each of the custom metadata records are the settings for a single rule. The following fields define the setup of each rule:
 * **Name** and **Label**: Add something to distinguish this rule from others
 * **Shared Object**: The API name (including "__c") of the object with records to be shared
-* **Shared To Field**: The API name (including "__c") of the field on the object above which is populated with the Id the entity the record should be shared with
-* **Share With**: The type of entity this rule should share with. Options are "Users", "Roles", "Roles and Internal Subordinates" and "Public Groups".
-* **Sharing Reason**: For custom objects
+* **Shared To Field**: The API name (including "__c") of the field on the object above which is populated an Id
+* **Share With**: The type of entity this rule should share with. Options are "Users", "Roles", "Roles and Internal Subordinates" and "Public Groups"
+* **Sharing Reason**: For custom objects, the sharing reason that share records should use
 
 
 * **Access Level**: Set to Read (users are shared relevant records in read-only), Edit (shared in read-write mode) or All (users are able to read, edit and transfer ownership of the record)
