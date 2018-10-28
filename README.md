@@ -7,11 +7,11 @@ But there's a key feature missing - sharing to users identified through related 
 
 FormulaShare let's you do that and more without resorting to complex development!
 
-* Records can be automatically shared to a user, role or group specified in a formula field
+* Records are shared to a user, role or group specified in a formula or lookup field
 * Sharing changes are assessed in real time as shared records are created and modified
-* Records can be shared with Read, Edit or All levels of access
-* Rules are set up as custom metadata, so can be managed by admins, and packaged for deployment
-* Any standard and custom objects are supported
+* Records can be shared with Read or Edit levels of access
+* Rules are custom metadata, so can be managed by admins and packaged for deployment
+* Standard and custom objects are supported
 * Works with Classic and Lightning
 * Powered by Salesforce apex / managed sharing
 
@@ -28,7 +28,7 @@ FormulaShare let's you do that and more without resorting to complex development
 
 By leveraging standard formula fields, FormulaShare lets admins quickly specify how records should be shared using a familiar feature. Complex relationships and conditions can be set where needed. Rules in custom metadata point FormulaShare to the relevant fields and objects.
 
-Suppose custom objects A (representing a country, for example) and B (for instance a job opportunity for that country) are related through a lookup or master detail relationship. If we want the ability to say "any users identified from records of object A should have access to linked records in object B", that's not possible with out of the box Salesforce functionality.
+Suppose custom objects A (representing a country, for example) and B (for instance a job opportunity for that country) are related through a lookup. If we want the to make sure users linked to object A should have access to related records in object B, that's not possible with out of the box Salesforce functionality.
 
 With FormulaShare, we can set a rule to reference a formula field on object B which specifies who the record should be shared with. The field could be a formula populating with a user, role or a group which is indicated on object A.
 
@@ -55,7 +55,7 @@ Once code from the repo is implemented, two key steps are needed to set up Formu
 The following steps can be carried out by an admin when a new sharing requirement is identified:
 
 ### Create sharing field
-A custom field is needed on the object which should be shared. The field should be populated with the Salesforce record Id (either the 15 or 18 character version) indicating the user, group or role which the record should be with. This could be a formula field returning text with the Id, but could alternatively be a lookup field to the User object, or even a text field populated with an Id manually or through automation.
+A custom field is needed on the object which should be shared. For rules sharing with users, the field should contain the Id of the user who should be granted access to the record (either 15 or 18 character versions are fine). For rules sharing with groups, the field should contain the name (developer name) of the public group which should be given access. For rules sharing with roles or roles and subordinates, either the Id or name of the role can be used. The field could be a formula returning text with the Id or name, but could alternatively be a lookup field or a text field populated through automation.
 
 ### Create sharing reason (custom objects only)
 FormulaShare creates entries in the object's share table with a sharing reason, which ensures FormulaShare can keep track of everything shared by a rule and remove sharing which isn't required. Set up a sharing reason (Classic interface only) from the custom object's setup page in the section "Apex Sharing Reasons". Note that if using the Lightning interface, sharing reasons can be set up by temporarily switching to Salesforce Classic.
@@ -65,11 +65,12 @@ For standard objects, sharing reasons aren't available. As an alternative, Formu
 ### Create FormulaShare rule record
 From the Setup menu, type "Custom Metadata Types" and click "Manage Records" for FormulaShare Rule. Each of the custom metadata records are the settings for a single rule. The following fields define the setup of each rule:
 * **Name** and **Label**: Add something to distinguish this rule from others
-* **Shared Object**: The API name (including "__c") of the object with records to be shared. Object must be set to Private (for Read, Edit or All access levels) or Public Read Only (for Edit or All access levels), and must support sharing - child objects in a master-detail relationship and some standard objects do not support independent sharing rules
-* **Shared To Id Field**: The API name (including "__c") of the field on the object above which is populated an Id
+* **Shared Object**: The API name (including "__c") of the object with records to be shared. Object must be set to Private (for Read or Edit access levels) or Public Read Only (for Edit access level), and must support sharing - child objects in a master-detail relationship and some standard objects do not support independent sharing rules
+* **Shared To Field**: The API name (including "__c") of the field on the object above which identifies who to share records with. The field can return either the Salesforce 15 or 18 character Id of the entity to be shared to, or the role or group name (developer name) when the rule provides this sharing
+* **Shared_To_Field_Type__c**: Either "Id" or "Name", depending on return type of the Shared To Field
 * **Share With**: The type of entity this rule should share with. Options are "Users", "Roles", "Roles and Internal Subordinates" and "Public Groups"
 * **Sharing Reason**: For custom objects, the "Reason Name" of the sharing reason related to the rule
-* **Access Level**: Set to Read (users are shared relevant records in read-only), Edit (shared in read-write mode) or All (users are able to read, edit and transfer ownership of the record)
+* **Access Level**: Set to Read or Edit
 
 ### Test configuration
 
@@ -80,7 +81,8 @@ Create a record in the shared object. As a system admin, the easiest way to chec
 The project is currently in beta. Code provided should work but no promises! The following is a list of areas which will be worked on in due course:
 * Apex unit tests for all code
 * Automated deployment of triggers and sharing reasons using metadata API (a la the wonderful [DeclareativeLookupRollupSummary](https://github.com/afawcett/declarative-lookup-rollup-summaries))
-* Packaging into a managed package and publication on AppExchange
+* Full adoption of the Enterprise Apex Pattern design approach (abstracting of selector layer)
+* Packaging and publication on AppExchange
 * Managed scheduling of batch job and configuration parameters in managed package setup
 * Lightning interface for metadata rule configuration
 * Improved error handling and validation
