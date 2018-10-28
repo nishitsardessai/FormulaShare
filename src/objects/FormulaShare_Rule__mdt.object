@@ -14,10 +14,6 @@
                 <fullName>Edit</fullName>
                 <default>false</default>
             </picklistValues>
-            <picklistValues>
-                <fullName>All</fullName>
-                <default>false</default>
-            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
@@ -71,10 +67,30 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Shared_To_Id_Field__c</fullName>
+        <fullName>Shared_To_Field_Type__c</fullName>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
-        <label>Shared To Id Field</label>
+        <label>Shared To Field Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Id</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Name</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Shared_To_Field__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Shared To Field</label>
         <length>255</length>
         <required>true</required>
         <type>Text</type>
@@ -94,5 +110,19 @@
     </fields>
     <label>FormulaShare Rule</label>
     <pluralLabel>FormulaShare Rules</pluralLabel>
+    <validationRules>
+        <fullName>Groups_must_be_shared_to_by_Name_field</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISPICKVAL(Shared_To_Field_Type__c,&apos;Id&apos;) &amp;&amp;  ISPICKVAL(Share_With__c,&apos;Public Groups&apos;)</errorConditionFormula>
+        <errorDisplayField>Shared_To_Field_Type__c</errorDisplayField>
+        <errorMessage>Rules sharing to public groups must be based on a field returning group name</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Users_must_be_shared_to_by_Id_field</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISPICKVAL(Shared_To_Field_Type__c,&apos;Name&apos;) &amp;&amp;  ISPICKVAL(Share_With__c,&apos;Users&apos;)</errorConditionFormula>
+        <errorDisplayField>Shared_To_Field_Type__c</errorDisplayField>
+        <errorMessage>Rules sharing to users must be based on a field returning the user Id (either a lookup or formula field)</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

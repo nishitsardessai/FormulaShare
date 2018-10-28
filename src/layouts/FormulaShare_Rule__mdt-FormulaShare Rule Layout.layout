@@ -24,7 +24,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Shared_To_Id_Field__c</field>
+                <field>Shared_To_Field__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -37,6 +37,10 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Shared_Object__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Shared_To_Field_Type__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

@@ -8,6 +8,7 @@ public class ProcessFormulaShareBatch implements Database.Batchable<sObject> {
 	// Accepts a list of types. Chained batches will be submitted if more than one type is provided
 	public ProcessFormulaShareBatch(List<Schema.SObjectType> types, Integer batchSize) {
 		this.types = types;
+		this.batchSize = batchSize;
 		this.typeInThisBatch = types[0];
 		this.typeRules = new FormulaShareService.RulesForTypeWrapper(typeInThisBatch);
 	}
