@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>FormulaShare Rule</label>
+    <pluralLabel>FormulaShare Rules</pluralLabel>
+    <visibility>Public</visibility>
     <fields>
         <fullName>Access_Level__c</fullName>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Access Level</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Read</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Edit</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>true</required>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Read</fullName>
+                    <default>true</default>
+                    <label>Read</label>
+                </value>
+                <value>
+                    <fullName>Edit</fullName>
+                    <default>false</default>
+                    <label>Edit</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Active__c</fullName>
@@ -29,41 +36,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Share_With__c</fullName>
+        <fullName>Object_Shared__c</fullName>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
-        <label>Share With</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Users</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Roles</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Roles and Internal Subordinates</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Public Groups</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
-        <required>true</required>
-        <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>Shared_Object__c</fullName>
-        <externalId>false</externalId>
-        <fieldManageability>DeveloperControlled</fieldManageability>
-        <label>Shared Object</label>
-        <length>255</length>
-        <required>true</required>
-        <type>Text</type>
+        <label>Object Shared</label>
+        <referenceTo>EntityDefinition</referenceTo>
+        <relationshipLabel>FormulaShare_Rules</relationshipLabel>
+        <relationshipName>FormulaShare_Rules</relationshipName>
+        <required>false</required>
+        <type>MetadataRelationship</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -71,30 +52,72 @@
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Shared To Field Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Id</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Name</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Id</fullName>
+                    <default>true</default>
+                    <label>Id</label>
+                </value>
+                <value>
+                    <fullName>Name</fullName>
+                    <default>false</default>
+                    <label>Name</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
-        <fullName>Shared_To_Field__c</fullName>
+        <fullName>Shared_To__c</fullName>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>The field on the shared object which contains the name or id of the entity this rule should share to</inlineHelpText>
         <label>Shared To Field</label>
-        <length>255</length>
-        <required>true</required>
-        <type>Text</type>
+        <metadataRelationshipControllingField>FormulaShare_Rule__mdt.Object_Shared__c</metadataRelationshipControllingField>
+        <referenceTo>FieldDefinition</referenceTo>
+        <relationshipLabel>FormulaShare_Rules</relationshipLabel>
+        <relationshipName>FormulaShare_Rules</relationshipName>
+        <required>false</required>
+        <type>MetadataRelationship</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Share_With__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Share With</label>
+        <required>true</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Users</fullName>
+                    <default>true</default>
+                    <label>Users</label>
+                </value>
+                <value>
+                    <fullName>Roles</fullName>
+                    <default>false</default>
+                    <label>Roles</label>
+                </value>
+                <value>
+                    <fullName>Roles and Internal Subordinates</fullName>
+                    <default>false</default>
+                    <label>Roles and Internal Subordinates</label>
+                </value>
+                <value>
+                    <fullName>Public Groups</fullName>
+                    <default>false</default>
+                    <label>Public Groups</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Sharing_Reason__c</fullName>
@@ -108,21 +131,18 @@
         <type>Text</type>
         <unique>true</unique>
     </fields>
-    <label>FormulaShare Rule</label>
-    <pluralLabel>FormulaShare Rules</pluralLabel>
     <validationRules>
         <fullName>Groups_must_be_shared_to_by_Name_field</fullName>
         <active>true</active>
-        <errorConditionFormula>ISPICKVAL(Shared_To_Field_Type__c,&apos;Id&apos;) &amp;&amp;  ISPICKVAL(Share_With__c,&apos;Public Groups&apos;)</errorConditionFormula>
+        <errorConditionFormula>ISPICKVAL(Shared_To_Field_Type__c,&#39;Id&#39;) &amp;&amp;  ISPICKVAL(Share_With__c,&#39;Public Groups&#39;)</errorConditionFormula>
         <errorDisplayField>Shared_To_Field_Type__c</errorDisplayField>
         <errorMessage>Rules sharing to public groups must be based on a field returning group name</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Users_must_be_shared_to_by_Id_field</fullName>
         <active>true</active>
-        <errorConditionFormula>ISPICKVAL(Shared_To_Field_Type__c,&apos;Name&apos;) &amp;&amp;  ISPICKVAL(Share_With__c,&apos;Users&apos;)</errorConditionFormula>
+        <errorConditionFormula>ISPICKVAL(Shared_To_Field_Type__c,&#39;Name&#39;) &amp;&amp;  ISPICKVAL(Share_With__c,&#39;Users&#39;)</errorConditionFormula>
         <errorDisplayField>Shared_To_Field_Type__c</errorDisplayField>
         <errorMessage>Rules sharing to users must be based on a field returning the user Id (either a lookup or formula field)</errorMessage>
     </validationRules>
-    <visibility>Public</visibility>
 </CustomObject>

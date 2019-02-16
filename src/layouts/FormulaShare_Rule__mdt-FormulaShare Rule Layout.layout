@@ -23,10 +23,6 @@
                 <field>Active__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Shared_To_Field__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Sharing_Reason__c</field>
             </layoutItems>
@@ -35,12 +31,16 @@
                 <field>Share_With__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Shared_Object__c</field>
+                <behavior>Edit</behavior>
+                <field>Shared_To_Field_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Shared_To_Field_Type__c</field>
+                <field>Object_Shared__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Shared_To__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -78,6 +78,8 @@
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
+        <layoutColumns/>
+        <layoutColumns/>
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
